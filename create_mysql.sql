@@ -1,3 +1,4 @@
+-- Entrega 01
 CREATE database Vendas;
 USE Vendas; 
 
@@ -27,6 +28,8 @@ CREATE TABLE Pedidos (
   Qtds int,
   Valor_pago decimal(18,2)
 );
+
+--Entrega 02
 
 INSERT INTO Produtos VALUES (1,'Blusa Ciganinha', 'Cropped', 'Renner', 'preto', 'pequena');
 INSERT INTO Produtos VALUES (2,'Jaqueta de couro', 'Jaqueta', 'Shein', 'azul', 'média');
@@ -60,6 +63,8 @@ INSERT INTO Pedidos VALUES ('86743567321','Rua Francisco Mello,481',98909784, 'V
 INSERT INTO Pedidos VALUES ('64532123456','Rua Senador Magalhães,591',080023123, 'Saia', 32, 890.44);
 INSERT INTO Pedidos VALUES ('31678240198','Rua Edvaldo Lopes',080012342, 'Macacão', 62, 3561.82);
 INSERT INTO Pedidos VALUES ('56352612361','Rua Tarcísio junqueira,281',080034123, 'Camiseta', 300, 6712.30);
+
+-- Entrega 03 (Os arquivos produtos.csv e clientes.csv devem estar no diretorio "/var/lib/mysql-files" dentro da instancia linux no docker)
 
 LOAD DATA INFILE '/var/lib/mysql-files/produtos.csv' INTO TABLE Produtos
 FIELDS TERMINATED BY ';'
