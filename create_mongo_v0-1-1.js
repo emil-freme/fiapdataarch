@@ -7,14 +7,15 @@
  *  - Julia Gouveia
  *  - Caio Diniz
  ************************/
+/*
 
-/**
- * Criando os schemas
- */
+print("---Criando Schemas---");
+
+print("---------- Pedidos Schemas---");
+
 const pedidosSchema = {
     "bsonType": "object",
     "properties": {
-        "_id":        { "bsonType": "objectId" },
         "cliente_id": { "bsonType": "objectId" },
         "endereco":   { "bsonType": "string" },
         "cep":        { "bsonType": "int" }, 
@@ -23,11 +24,11 @@ const pedidosSchema = {
     }
 }
 
+print("---------- Produtos Schemas---");
+
 const produtosSchema = {
     "bsonType": "object",
-    "required": ["code", "nome", "modelo", "fabricante", "cor", "tam"],
     "properties":{
-        "_id":        { "bsonType": "objectId" },
         "code":       { "bsonType": "string" },
         "nome":       { "bsonType": "string" },
         "modelo":     { "bsonType": "string" },
@@ -37,11 +38,11 @@ const produtosSchema = {
     }
 }
 
+print("---------- Cliente Schemas---");
+
 const clienteSchema = {
     "bsonType": "object",
-    "required": ["cpf", "nome"],
     "properties":{
-        "_id":        { "bsonType": "objectId" },
         "cpf":        { "bsonType": "int" },
         "nome":       { "bsonType": "string" }, 
         "endereco":   { "bsonType": "object",
@@ -50,32 +51,32 @@ const clienteSchema = {
                             "title": "endereco",
                             "properties":{
                                 "logradouro":  { "bsonType": "string" },
-                                "numero":      { "bsonType": "string" },
-                                "complemento": { "bsonType": "string" }
+                                "numero":      { "bsonType": "string" }
                             }
                         }
                     }, 
         "cep":        { "bsonType": "int" }, 
         "email":      { "bsonType": "string" }, 
         "telefones":  { "bsonType": "array",
-                        "items":   { "bsonType": "int" } 
+                        "items":   { "bsonType": "string" } 
                         } 
     }
 }
 
+*/
 
-/**
- * Criando as collections
- */
-db.createCollection("produtos", {"validator": {$jsonSchema: produtosSchema}});
 
-db.createCollection("clientes", {"validator": {$jsonSchema: clienteSchema}});
+print("--- Criando as collection com validação ---");
 
-db.createCollection("pedidos",  {"validator": {$jsonSchema: pedidosSchema}});
+db.createCollection("produtos");//, {"validator": {$jsonSchema: produtosSchema}});
 
-/**
- * Inserindo registros na collection clientes
- */
+db.createCollection("clientes");//, {"validator": {$jsonSchema: clienteSchema}});
+
+db.createCollection("pedidos");//,  {"validator": {$jsonSchema: pedidosSchema}});
+
+
+print("--- Inserindo base de clientes ---");
+
 db.clientes.insertMany([
 {
    "cpf":'28323428312',
@@ -84,8 +85,9 @@ db.clientes.insertMany([
                 "numero":"631"},
    "cep":080010001,
    "email":'roberto@gmail.com',
-   "telefones":['11973813232']
-    }]/*,
+   "telefones":["11973813232"]
+    },
+
 {
    "cpf":'14253627381',
    "nome":'Ricardo Silverio',
@@ -169,9 +171,7 @@ db.clientes.insertMany([
 ]);
 
 
-/**
- * Inserindo registros de produtos
- */
+print("--- Inserindo base de produtos ---");
 
 db.produtos.insertMany([
   {
@@ -256,10 +256,9 @@ db.produtos.insertMany([
   }
 ]);
 
-/**
- * Inserindo os resgistros de pedidos
- */
-db.pedidos.insertManyMany([
+print("--- Inserindo base de pedidos ---");
+
+db.pedidos.insertMany([
 {
    "cliente":"28323428312",
    "endereco":"Rua Eduardo Siqueira,631",
@@ -341,4 +340,3 @@ db.pedidos.insertManyMany([
    "valor_pago":6712.30
 }
 ]);
-
