@@ -1,3 +1,4 @@
+-- Entrega 01
 CREATE database Vendas;
 USE Vendas; 
 
@@ -7,7 +8,7 @@ CREATE TABLE Produtos (
   Modelo varchar(50),
   Fabricante varchar(80),
   Cor ENUM('preto','branco','azul','vermelho'),
- Tam ENUM('pequena','média','grande','extra-grande')
+ Tam ENUM('pequena','mdia','grande','extra-grande')
 );
 
 CREATE TABLE Clientes (
@@ -27,6 +28,8 @@ CREATE TABLE Pedidos (
   Qtds int,
   Valor_pago decimal(18,2)
 );
+
+--Entrega 02
 
 INSERT INTO Produtos VALUES (1,'Blusa Ciganinha', 'Cropped', 'Renner', 'preto', 'pequena');
 INSERT INTO Produtos VALUES (2,'Jaqueta de couro', 'Jaqueta', 'Shein', 'azul', 'média');
@@ -61,17 +64,17 @@ INSERT INTO Pedidos VALUES ('64532123456','Rua Senador Magalhães,591',080023123
 INSERT INTO Pedidos VALUES ('31678240198','Rua Edvaldo Lopes',080012342, 'Macacão', 62, 3561.82);
 INSERT INTO Pedidos VALUES ('56352612361','Rua Tarcísio junqueira,281',080034123, 'Camiseta', 300, 6712.30);
 
-LOAD DATA INFILE 'c:/Produtos.csv'
-INTO TABLE Produtos
-FIELDS TERMINATED BY ';'
-ENCLOSED BY '''
-LINES TERMINATED BY '\n'
-IGNORE 1 ROWS;
+-- Entrega 03 (Os arquivos produtos.csv e clientes.csv devem estar no diretorio "/var/lib/mysql-files" dentro da instancia linux no docker)
 
-LOAD DATA INFILE 'c:/clientes.csv'
-INTO TABLE Produtos
+LOAD DATA INFILE '/var/lib/mysql-files/produtos.csv' INTO TABLE Produtos
 FIELDS TERMINATED BY ';'
-ENCLOSED BY '''
-LINES TERMINATED BY '\n'
+ENCLOSED BY '"'
+LINES TERMINATED BY '\r\n';
+
+LOAD DATA INFILE '/var/lib/mysql-files/clientes.csv'
+INTO TABLE Clientes
+FIELDS TERMINATED BY ';'
+ENCLOSED BY '"'
+LINES TERMINATED BY '\r\n'
 IGNORE 1 ROWS;
 
