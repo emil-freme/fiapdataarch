@@ -1,6 +1,6 @@
 /*************************
  * 2023
- * Script criado para matéria de ...
+ * Script criado para matéria de 
  * Integrantes:
  *  - Emil Freme
  *  - Evandro Souza
@@ -11,60 +11,86 @@
 /**
  * Criando os schemas
  */
-/*
+const pedidosSchema = {
+    "bsonType": "object",
+    "properties": {
+        "_id":        { "bsonType": "objectId" },
+        "cliente_id": { "bsonType": "objectId" },
+        "endereco":   { "bsonType": "string" },
+        "cep":        { "bsonType": "int" }, 
+        "itens":      { "bsonType": "array", 
+                            "items": {"bsonType" :"objectId"} }
+    }
+}
+
 const produtosSchema = {
-    bsonType: "object",
-    code: String
-    nome: String
-    modelo: String
-    fabricante: String
-    cor: {enum: []}
-    tam:
+    "bsonType": "object",
+    "required": ["code", "nome", "modelo", "fabricante", "cor", "tam"],
+    "properties":{
+        "_id":        { "bsonType": "objectId" },
+        "code":       { "bsonType": "string" },
+        "nome":       { "bsonType": "string" },
+        "modelo":     { "bsonType": "string" },
+        "fabricante": { "bsonType": "string" },
+        "cor":        { "bsonType": "string" },
+        "tam":        { "bsonType": "string" },
+    }
 }
 
 const clienteSchema = {
-    cpf:
-    nome:
-    endereco:
-    cep:
-    email:
-    telefones:
+    "bsonType": "object",
+    "required": ["cpf", "nome"],
+    "properties":{
+        "_id":        { "bsonType": "objectId" },
+        "cpf":        { "bsonType": "int" },
+        "nome":       { "bsonType": "string" }, 
+        "endereco":   { "bsonType": "object",
+                        "additionalProperties": {
+                            "bsonType": "object",
+                            "title": "endereco",
+                            "properties":{
+                                "logradouro":  { "bsonType": "string" },
+                                "numero":      { "bsonType": "string" },
+                                "complemento": { "bsonType": "string" }
+                            }
+                        }
+                    }, 
+        "cep":        { "bsonType": "int" }, 
+        "email":      { "bsonType": "string" }, 
+        "telefones":  { "bsonType": "array",
+                        "items":   { "bsonType": "int" } 
+                        } 
+    }
 }
 
-const pedidosSchema = {
-    cliente_id:
-    endereco:
-    cep:
-    itens: {}
-}
-*/
 
 /**
  * Criando as collections
  */
-db.createCollection("pedidos");
+db.createCollection("produtos", {"validator": {$jsonSchema: produtosSchema}});
 
-db.createCollection("produtos");
+db.createCollection("clientes", {"validator": {$jsonSchema: clienteSchema}});
 
-db.createCollection("clientes");
-
+db.createCollection("pedidos",  {"validator": {$jsonSchema: pedidosSchema}});
 
 /**
  * Inserindo registros na collection clientes
  */
-db.clientes.insert([
+db.clientes.insertMany([
 {
    "cpf":'28323428312',
    "nome":'Roberto da costa',
-   "endereco":'Rua Eduardo Siqueira,631',
+   "endereco":{"logradouro":"Rua Eduardo Siqueira",
+                "numero":"631"},
    "cep":080010001,
    "email":'roberto@gmail.com',
    "telefones":['11973813232']
-    },
+    }]/*,
 {
    "cpf":'14253627381',
    "nome":'Ricardo Silverio',
-   "endereco":'Rua Ferreira Alves,821',
+   "endereco":{"logradouro":"Rua Ferreira Alves",
+                "numero":"821"},
    "cep":070012786,
    "email":'ricardo@gmail.com',
    "telefones":['11943536326']
@@ -72,7 +98,8 @@ db.clientes.insert([
 {
    "cpf":'25463784311',
    "nome":'Rafael Fonseca',
-   "endereco":'Rua Joao Garcia,911',
+   "endereco":{"logradouro":'Rua Joao Garcia',
+                "numero":"911"},
    "cep":090045123,
    "email":'rafael@gmail.com',
    "telefones":['11943536326']
@@ -80,7 +107,8 @@ db.clientes.insert([
 {
    "cpf":'65423173613',
    "nome":'Rodrigo Castanheiro',
-   "endereco":'Rua Mairiporã,121',
+   "endereco":{"logradouro":"Rua Mairiporã",
+				"numero":"121"},
    "cep":83928384,
    "email":'rodrigo@gmail.com',
    "telefones":['11943536326']
@@ -88,7 +116,8 @@ db.clientes.insert([
 {
    "cpf":'45632781231',
    "nome":'Gabriel Arcanjo',
-   "endereco":'Rua Bernadino de campos,261',
+   "endereco":{"logradouro":"Rua Bernadino de campos",
+				"numero":"261"},
    "cep":89745123,
    "email":'gabriel@gmail.com',
    "telefones":['11943536326']
@@ -96,7 +125,8 @@ db.clientes.insert([
 {
    "cpf":'78346271536',
    "nome":'Jurandir Souza',
-   "endereco":'Rua Doutor ALencar,371',
+   "endereco":{"logradouro":"Rua Doutor ALencar",
+				"numero":"371"},
    "cep":67564987,
    "email":'jurandir@gmail.com',
    "telefones":['11943536326']
@@ -104,7 +134,8 @@ db.clientes.insert([
 {
    "cpf":'56352612361',
    "nome":'Lazaro Silva',
-   "endereco":'Rua Tarcísio junqueira,281',
+   "endereco":{"logradouro":"Rua Tarcísio junqueira",
+				"numero":"281"},
    "cep":080034123,
    "email":'lazaro@gmail.com',
    "telefones":['11943536326']
@@ -112,7 +143,8 @@ db.clientes.insert([
 {
    "cpf":'86743567321',
    "nome":'Ataíde Da Silva',
-   "endereco":'Rua Francisco Mello,481',
+   "endereco":{"logradouro":"Rua Francisco Mello",
+				"numero":"481"},
    "cep":98909784,
    "email":'ataide@gmail.com',
    "telefones":['11943536326']
@@ -120,7 +152,8 @@ db.clientes.insert([
 {
    "cpf":'64532123456',
    "nome":'Miguel Oliveira',
-   "endereco":'Rua Senador Magalhães,591',
+   "endereco":{"logradouro":"Rua Senador Magalhães",
+				"numero":"591"},
    "cep":080023123,
    "email":'miguel@gmail.com',
    "telefones":['11943536326']
@@ -128,7 +161,7 @@ db.clientes.insert([
 {
    "cpf":'31678240198',
    "nome":'Rodolfo Garcia',
-   "endereco":'Rua Edvaldo Lopes',
+   "endereco":{"logradouro":'Rua Edvaldo Lopes'},
    "cep":080012342,
    "email":'rodolfo@gmail.com',
    "telefones":['11943536326']
@@ -140,7 +173,7 @@ db.clientes.insert([
  * Inserindo registros de produtos
  */
 
-db.produtos.insert([
+db.produtos.insertMany([
   {
     "Codigo": 1,
     "Nome": 'Blusa Ciganinha',
@@ -226,7 +259,7 @@ db.produtos.insert([
 /**
  * Inserindo os resgistros de pedidos
  */
-db.pedidos.insertMany([
+db.pedidos.insertManyMany([
 {
    "cliente":"28323428312",
    "endereco":"Rua Eduardo Siqueira,631",
