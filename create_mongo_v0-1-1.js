@@ -3,8 +3,9 @@
  * Script criado para matéria de ...
  * Integrantes:
  *  - Emil Freme
- *  - Evandro 
- *  - Juliana
+ *  - Evandro Souza
+ *  - Julia Gouveia
+ *  - Caio Diniz
  ************************/
 
 /**
